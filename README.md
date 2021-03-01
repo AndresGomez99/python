@@ -1,96 +1,45 @@
-# Template for hosting python scripts and applications on Heroku
+# Python: Getting Started
 
-This is a small example of running your script with
-[Heroku](https://www.heroku.com/). You can run almost any python application
-with any dependencies.
+A barebones Django app, which can easily be deployed to Heroku.
 
-## Getting Started
+This application supports the [Getting Started with Python on Heroku](https://devcenter.heroku.com/articles/getting-started-with-python) article - check it out.
 
-1. Download or clone this repository
-2. Register on [Heroku](https://www.heroku.com/)
-3. Download and install [Heroku CLI](https://devcenter.heroku.com/articles/getting-started-with-python#set-up)
-4. Download and install [git](https://git-scm.com/downloads)
-5. Copy your script or project to this repository's folder
-6. Replace "script.py" with the path to your main executable file in `Procfile`
+## Running Locally
 
-   ```procfile
-   worker: python script.py
-   ```
+Make sure you have Python 3.7 [installed locally](http://install.python-guide.org). To push to Heroku, you'll need to install the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli), as well as [Postgres](https://devcenter.heroku.com/articles/heroku-postgresql#local-setup).
 
-   > If you are getting errors, you can try replace `worker` with `web`.
-7. You may select your python version and runtime using `runtime.txt`. Read
-   how on [official heroku page](https://devcenter.heroku.com/articles/python-runtimes#selecting-a-runtime).
-8. If you are using any not built-in modules, you must add them to your
-   `requirements.txt`. To check which version of the module you have, run
-   `pip freeze` in the terminal. You will get lines with information about
-   installed modules and their versions in the format like
-   `MODULE_NAME==MODULE_VERSION`. Add lines with required modules and their
-   versions to your `requirements.txt`. Don't keep unused modules in
-   `requirements.txt`. This file should contain every module your application
-   needs. Heroku will install modules from this file automatically.
-9. Open terminal (or do it another way, but I will explain how to do it in
-   the terminal on Ubuntu) and create a git repository.
-   1. Initiate git repository
+```sh
+$ git clone https://github.com/heroku/python-getting-started.git
+$ cd python-getting-started
 
-      ```bash
-      git init
-      ```
+$ python3 -m venv getting-started
+$ pip install -r requirements.txt
 
-   2. Create heroku application
+$ createdb python_getting_started
 
-      ```bash
-      heroku create
-      ```
+$ python manage.py migrate
+$ python manage.py collectstatic
 
-   3. Add, commit and push your code into branch `master` of the
-      remote `heroku`.
+$ heroku local
+```
 
-      ```bash
-      git add .
-      git commit -m "initial commit"
-      git push heroku master
-      ```
+Your app should now be running on [localhost:5000](http://localhost:5000/).
 
-10. Specify the amount of worker that will run your application
+## Deploying to Heroku
 
-    ```bash
-    heroku ps:scale worker=1
-    ```
+```sh
+$ heroku create
+$ git push heroku main
 
-11. Now everything should be working. You can check your logs with this command
+$ heroku run python manage.py migrate
+$ heroku open
+```
+or
 
-    ```bash
-    heroku logs --tail
-    ```
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
-12. You can open the URL where the script is deployed using the below
-    command (if you are deploying web application)
+## Documentation
 
-    ```bash
-    heroku open
-    ```
+For more information about using Python on Heroku, see these Dev Center articles:
 
-13. From now on you can use usual git commands (push, add, commit, etc.)
-    to update your app. Every time you `push heroku master` your
-    app gets redeployed with updated source code
-
-14. To stop your application scale down the amount of workers with like this
-
-     ```bash
-    heroku ps:scale worker=0
-    ```
-
-### Prerequisites
-
-* [Heroku CLI](https://devcenter.heroku.com/articles/getting-started-with-python#set-up)
-* [git](https://git-scm.com/downloads)
-
-## Authors
-
-* @michaelkrukov - https://michaelkrukov.ru/
-
-## Acknowledgments
-
-* [Official guide to deploy app](https://devcenter.heroku.com/articles/getting-started-with-python#introduction)
-* [Official guide about worker](https://devcenter.heroku.com/articles/background-jobs-queueing)
-* [Guided "Simple twitter-bot with Python, Tweepy and Heroku"](http://briancaffey.github.io/2016/04/05/twitter-bot-tutorial.html)
+- [Python on Heroku](https://devcenter.heroku.com/categories/python)
